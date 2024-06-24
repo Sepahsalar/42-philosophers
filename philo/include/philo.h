@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/06/24 11:13:45 by asohrabi         ###   ########.fr       */
+/*   Created: 2024/06/24 16:13:40 by asohrabi          #+#    #+#             */
+/*   Updated: 2024/06/24 16:42:28 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/time.h>
+
+void	ft_putendl_fd(char *s, int fd);
+int		ft_atoi(char *str);
+int		ft_isdigit(char *str);
 
 #endif

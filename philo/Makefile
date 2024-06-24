@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/11/29 10:43:45 by asohrabi          #+#    #+#              #
-#    Updated: 2024/06/24 10:50:16 by asohrabi         ###   ########.fr        #
+#    Created: 2024/06/24 16:14:08 by asohrabi          #+#    #+#              #
+#    Updated: 2024/06/24 16:17:05 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME = philo
 
 HEADER	= -I ./include
 
-FUNC =  src/atoi_utils.c \
+FUNC =  src/main.c \
+			src/utils.c \
 
 OBJ = ${FUNC:.c=.o}
 
