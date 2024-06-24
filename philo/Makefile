@@ -6,11 +6,11 @@
 #    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/29 10:43:45 by asohrabi          #+#    #+#              #
-#    Updated: 2024/06/24 10:43:27 by asohrabi         ###   ########.fr        #
+#    Updated: 2024/06/24 10:50:16 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+NAME = philo
 
 HEADER	= -I ./include
 
@@ -26,8 +26,7 @@ CFLAGS = -Wall -Wextra -Werror
 all: ${NAME}
 
 ${NAME}: ${OBJ}
-	@make -C ./lib/libft
-	@cc ${CFLAGS} ${OBJ} ${HEADER} -o ${NAME}
+	@cc ${CFLAGS} -O3 -pthread ${OBJ} ${HEADER} -o ${NAME}
 
 clean:
 	@rm -f ${OBJ}
