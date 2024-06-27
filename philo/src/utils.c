@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:17:18 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/27 12:59:43 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:58:14 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,13 @@ time_t	current_time(void)
 	return (time_ms);
 }
 
-void	clean_all(char *str, t_philo *philo)
+int	ft_usleep(time_t ms)
 {
-	if (str)
-		ft_putendl_fd(str, 2);
-	// pthread_mutex_destroy
+	time_t	start;
+
+	start = current_time();
+	while ((current_time() - start) < ms)
+		if (usleep(500) == -1)
+			return (1);
+	return (0);
 }

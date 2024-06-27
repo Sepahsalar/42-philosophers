@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:13:32 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/27 12:00:33 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:33:34 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ int	check_args(char **argv)
 
 int	main(int argc, char **argv)
 {
+	t_manager		manager;
+	t_philo			philos[MAX_PHILO];
+	pthread_mutex_t	forks[MAX_PHILO];
+
 	if (argc != 5 && argc != 6)
 	{
 		ft_putendl_fd("Error: Invalid number of arguments", 2);
@@ -43,5 +47,10 @@ int	main(int argc, char **argv)
 	}
 	if (check_args(argv))
 		return (1);
+	init_manager(&manager, philos);
+	init_forks(forks, ft_atoi(argv[1]));
+	init_philos(&manager, philos, forks, argv);
+	execute(&manager, forks);
+	terminate(NULL, &manager, forks);
 	return (0);
 }
