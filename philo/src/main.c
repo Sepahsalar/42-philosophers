@@ -6,13 +6,13 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:13:32 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/27 17:33:34 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/27 18:08:50 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	check_args(char **argv)
+static int	check_args(char **argv)
 {
 	int	i;
 

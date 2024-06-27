@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:41:54 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/27 17:37:59 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/27 18:31:33 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,22 +81,6 @@ void	execute(t_manager *manager, pthread_mutex_t *forks)
 	controller = create_thread(manager, forks);
 	if (!controller)
 		return ;
-	// i = 0;
-	// if (pthread_create(&controller, NULL, &control, manager->philos))
-	// {
-	// 	terminate("Error: Creating thread failed", manager, forks);
-	// 	return ;
-	// }
-	// while (i < manager->philos->n_philos)
-	// {
-	// 	if (pthread_create(&manager->philos[i].thread, NULL,
-	// 			&process, &manager->philos[i]))
-	// 	{
-	// 		terminate("Error: Creating thread failed", manager, forks);
-	// 		return ;
-	// 	}
-	// 	i++;
-	// }
 	if (pthread_join(controller, NULL))
 	{
 		terminate("Error: Joining thread failed", manager, forks);

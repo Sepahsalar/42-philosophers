@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:23:58 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/27 17:40:39 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/27 18:32:20 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ void	print_log(t_philo *philo, char *str)
 	pthread_mutex_unlock(philo->lock_write);
 }
 
+static int	ft_usleep_error(void)
+{
+	ft_putendl_fd("Error: usleep failed", 2);
+	return (1);
+}
+
 int	start_eating(t_philo *philo)
 {
 	pthread_mutex_lock(philo->r_fork);
@@ -30,10 +36,7 @@ int	start_eating(t_philo *philo)
 	if (philo->n_philos == 1)
 	{
 		if (ft_usleep(philo->t_die))
-		{
-			ft_putendl_fd("Error: usleep failed", 2);
-			return (1);
-		}
+			return (ft_usleep_error());
 		pthread_mutex_unlock(philo->r_fork);
 		return (0);
 	}
@@ -46,10 +49,7 @@ int	start_eating(t_philo *philo)
 	philo->meals_eaten++;
 	pthread_mutex_unlock(philo->lock_meal);
 	if (ft_usleep(philo->t_eat))
-	{
-		ft_putendl_fd("Error: usleep failed", 2);
-		return (1);
-	}
+		return (ft_usleep_error());
 	philo->is_eating = 0;
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);
