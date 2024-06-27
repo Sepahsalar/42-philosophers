@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:13:32 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/24 16:52:07 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/27 12:00:33 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ int	check_args(char **argv)
 	int	i;
 
 	i = 1;
+	if (ft_atoi(argv[1]) > MAX_PHILO)
+	{
+		ft_putendl_fd("Error: Too many philosophers entered.", 2);
+		return (1);
+	}
 	while (argv[i])
 	{
 		if (!ft_isdigit(argv[i]) || ft_atoi(argv[i]) <= 0)

@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:17:18 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/24 16:45:22 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/27 12:59:43 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,22 @@ int	ft_isdigit(char *str)
 		i++;
 	}
 	return (0);
+}
+
+time_t	current_time(void)
+{
+	struct timeval	now;
+	time_t			time_ms;
+
+	if (gettimeofday(&now, NULL) == -1)
+		ft_putendl_fd("Error: Gettimeofday failed", 2); // or call clean all
+	time_ms = now.tv_sec * 1000 + now.tv_usec / 1000;
+	return (time_ms);
+}
+
+void	clean_all(char *str, t_philo *philo)
+{
+	if (str)
+		ft_putendl_fd(str, 2);
+	// pthread_mutex_destroy
 }
