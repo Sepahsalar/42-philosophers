@@ -6,13 +6,13 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:41:54 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/28 10:46:20 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/28 13:23:37 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	check_dead_loop(t_philo *philo)
+int	check_lock_dead(t_philo *philo)
 {
 	pthread_mutex_lock(philo->lock_dead);
 	if (*(philo->dead) == 1)
@@ -37,7 +37,7 @@ static void	*process(void *arg)
 			return (NULL);
 		}
 	}
-	while (!check_dead_loop(philo))
+	while (!check_lock_dead(philo))
 	{
 		if (start_eating(philo))
 			return (NULL);
