@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:13:40 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/27 18:31:49 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/28 11:33:13 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/time.h>
 
 # define MAX_PHILO 300
+# define ANSI_COLOR_RED "\001\x1b[31m\002"
 
 typedef struct s_philo
 {
@@ -65,7 +66,7 @@ int		check_dead_loop(t_philo *philo);
 int		start_eating(t_philo *philo);
 int		start_sleeping(t_philo *philo);
 int		start_thinking(t_philo *philo);
-void	print_log(t_philo *philo, char *str);
+void	print_log(t_philo *philo, char *str, int dead);
 void	execute(t_manager *manager, pthread_mutex_t *forks);
 void	*control(void *arg);
 

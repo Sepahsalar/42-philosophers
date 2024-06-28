@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:59:52 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/27 18:06:52 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/28 11:34:08 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	check_dead(t_philo *philos)
 	{
 		if (check_starved(&philos[i]))
 		{
-			print_log(&philos[i], "died");
+			print_log(&philos[i], "died", 1);
 			pthread_mutex_lock(philos->lock_dead);
 			*(philos->dead) = 1;
 			pthread_mutex_unlock(philos->lock_dead);

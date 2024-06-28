@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:00:54 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/27 15:47:00 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/28 10:49:12 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	init_manager(t_manager *manager, t_philo *philos)
 {
 	manager->is_dead = 0;
 	manager->philos = philos;
-	pthread_mutex_init(&manager->lock_write, NULL);
-	pthread_mutex_init(&manager->lock_dead, NULL);
-	pthread_mutex_init(&manager->lock_meal, NULL);
+	pthread_mutex_init(&(manager->lock_write), NULL);
+	pthread_mutex_init(&(manager->lock_dead), NULL);
+	pthread_mutex_init(&(manager->lock_meal), NULL);
 }
 
 void	init_forks(pthread_mutex_t *forks, int num_forks)
@@ -59,15 +59,15 @@ void	init_philos(t_manager *manager, t_philo *philos, pthread_mutex_t *forks,
 		philos[i].start_time = current_time();
 		philos[i].last_meal = current_time();
 		get_argv(&philos[i], argv);
-		philos[i].dead = &manager->is_dead;
+		philos[i].dead = &(manager->is_dead);
 		philos[i].r_fork = &forks[i];
 		if (i == 0)
 			philos[i].l_fork = &forks[ft_atoi(argv[1]) - 1];
 		else
 			philos[i].l_fork = &forks[i - 1];
-		philos[i].lock_write = &manager->lock_write;
-		philos[i].lock_dead = &manager->lock_dead;
-		philos[i].lock_meal = &manager->lock_meal;
+		philos[i].lock_write = &(manager->lock_write);
+		philos[i].lock_dead = &(manager->lock_dead);
+		philos[i].lock_meal = &(manager->lock_meal);
 		i++;
 	}
 }

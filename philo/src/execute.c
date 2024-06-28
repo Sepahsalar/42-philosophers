@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:41:54 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/27 18:31:33 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/28 10:46:20 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ static pthread_t	create_thread(t_manager *manager, pthread_mutex_t *forks)
 	i = 0;
 	while (i < manager->philos->n_philos)
 	{
-		if (pthread_create(&manager->philos[i].thread, NULL,
-				&process, &manager->philos[i]))
+		if (pthread_create(&(manager->philos[i].thread), NULL,
+				&process, &(manager->philos[i])))
 		{
 			terminate("Error: Creating thread failed", manager, forks);
 			break ;
