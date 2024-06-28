@@ -6,18 +6,25 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:23:58 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/28 13:34:28 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/28 15:15:31 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	print_log(t_philo *philo, char *str, int dead)
+int	print_log(t_philo *philo, char *str, int dead)
 {
 	time_t	time;
 
-	pthread_mutex_lock(philo->lock_write);
-	time = current_time() - philo->start_time;
+	if (pthread_mutex_lock(philo->lock_write))
+	{
+		ft_putendl_fd("Error: Mutex lock failed", 2);
+		return (1);
+	}
+	time = current_time();
+	if (time == -1)
+		return (1);
+	time = time - philo->start_time;
 	if (!check_lock_dead(philo))
 	{
 		if (dead == 0)
@@ -26,48 +33,66 @@ void	print_log(t_philo *philo, char *str, int dead)
 			printf(ANSI_COLOR_RED"%ld\t%d %s\n"ANSI_COLOR_RESET,
 				time, philo->id, str);
 	}
-	pthread_mutex_unlock(philo->lock_write);
+	if (pthread_mutex_unlock(philo->lock_write))
+	{
+		ft_putendl_fd("Error: Mutex lock failed", 2);
+		return (1);
+	}
+	return (0);
 }
 
-static int	ft_usleep_error(void)
+static int	ft_error(char *str)
 {
-	ft_putendl_fd("Error: usleep failed", 2);
+	ft_putendl_fd(str, 2);
 	return (1);
 }
 
 int	start_eating(t_philo *philo)
 {
-	pthread_mutex_lock(philo->r_fork);
-	print_log(philo, "has taken a fork", 0);
+	if (pthread_mutex_lock(philo->r_fork))
+		return (ft_error("Error: Mutex lock failed"));
+	if (print_log(philo, "has taken a fork", 0))
+		return (1);
 	if (philo->n_philos == 1)
 	{
 		if (ft_usleep(philo->t_die))
-			return (ft_usleep_error());
-		pthread_mutex_unlock(philo->r_fork);
+			return (ft_error("Error: Usleep failed"));
+		if (pthread_mutex_unlock(philo->r_fork))
+			return (ft_error("Error: Mutex unlock failed"));
 		return (0);
 	}
-	pthread_mutex_lock(philo->l_fork);
-	print_log(philo, "has taken a fork", 0);
+	if (pthread_mutex_lock(philo->l_fork))
+		return (ft_error("Error: Mutex lock failed"));
+	if (print_log(philo, "has taken a fork", 0))
+		return (1);
 	philo->is_eating = 1;
-	print_log(philo, "is eating", 0);
-	pthread_mutex_lock(philo->lock_meal);
+	if (print_log(philo, "is eating", 0))
+		return (1);
+	if (pthread_mutex_lock(philo->lock_meal))
+		return (ft_error("Error: Mutex lock failed"));
 	philo->last_meal = current_time();
+	if (philo->last_meal == -1)
+		return (1);
 	philo->meals_eaten++;
-	pthread_mutex_unlock(philo->lock_meal);
+	if (pthread_mutex_unlock(philo->lock_meal))
+		return (ft_error("Error: Mutex unlock failed"));
 	if (ft_usleep(philo->t_eat))
-		return (ft_usleep_error());
+		return (ft_error("Error: Usleep failed"));
 	philo->is_eating = 0;
-	pthread_mutex_unlock(philo->l_fork);
-	pthread_mutex_unlock(philo->r_fork);
+	if (pthread_mutex_unlock(philo->l_fork))
+		return (ft_error("Error: Mutex unlock failed"));
+	if (pthread_mutex_unlock(philo->r_fork))
+		return (ft_error("Error: Mutex unlock failed"));
 	return (0);
 }
 
 int	start_sleeping(t_philo *philo)
 {
-	print_log(philo, "is sleeping", 0);
+	if (print_log(philo, "is sleeping", 0))
+		return (1);
 	if (ft_usleep(philo->t_sleep))
 	{
-		ft_putendl_fd("Error: usleep failed", 2);
+		ft_putendl_fd("Error: Usleep failed", 2);
 		return (1);
 	}
 	return (0);
@@ -75,6 +100,7 @@ int	start_sleeping(t_philo *philo)
 
 int	start_thinking(t_philo *philo)
 {
-	print_log(philo, "is thinking", 0);
+	if (print_log(philo, "is thinking", 0))
+		return (1);
 	return (0);
 }

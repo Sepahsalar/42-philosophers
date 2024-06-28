@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:13:32 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/27 18:08:50 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/28 14:45:04 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int argc, char **argv)
 	if (check_args(argv))
 		return (1);
 	init_manager(&manager, philos);
-	init_forks(forks, ft_atoi(argv[1]));
+	init_forks(&manager, forks, ft_atoi(argv[1]));
 	init_philos(&manager, philos, forks, argv);
 	execute(&manager, forks);
 	terminate(NULL, &manager, forks);

@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:13:40 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/28 13:33:24 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/28 15:07:32 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <pthread.h>
 # include <stdio.h>
-# include <stdlib.h>
 # include <unistd.h>
 # include <sys/time.h>
 
@@ -60,14 +59,14 @@ time_t	current_time(void);
 int		ft_usleep(time_t ms);
 void	terminate(char *str, t_manager *manager, pthread_mutex_t *forks);
 void	init_manager(t_manager *manager, t_philo *philos);
-void	init_forks(pthread_mutex_t *forks, int num_forks);
+void	init_forks(t_manager *manager, pthread_mutex_t *forks, int num_forks);
 void	init_philos(t_manager *manager, t_philo *philos, pthread_mutex_t *forks,
 			char **argv);
 int		check_lock_dead(t_philo *philo);
 int		start_eating(t_philo *philo);
 int		start_sleeping(t_philo *philo);
 int		start_thinking(t_philo *philo);
-void	print_log(t_philo *philo, char *str, int dead);
+int		print_log(t_philo *philo, char *str, int dead);
 void	execute(t_manager *manager, pthread_mutex_t *forks);
 void	*control(void *arg);
 

@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:17:18 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/27 18:08:05 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/28 15:20:18 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ time_t	current_time(void)
 	time_t			time_ms;
 
 	if (gettimeofday(&now, NULL) == -1)
+	{
 		ft_putendl_fd("Error: Gettimeofday failed", 2);
+		return (-1);
+	}
 	time_ms = now.tv_sec * 1000 + now.tv_usec / 1000;
 	return (time_ms);
 }
@@ -83,6 +86,8 @@ int	ft_usleep(time_t ms)
 	time_t	start;
 
 	start = current_time();
+	if (start == -1)
+		return (1);
 	while ((current_time() - start) < ms)
 		if (usleep(500) == -1)
 			return (1);

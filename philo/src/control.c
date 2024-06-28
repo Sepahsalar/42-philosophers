@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:59:52 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/28 11:34:08 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/28 15:16:22 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,33 @@ static int	check_finished_eating(t_philo *philos)
 		return (0);
 	while (i < philos->n_philos)
 	{
-		pthread_mutex_lock(philos->lock_meal);
+		if (pthread_mutex_lock(philos->lock_meal))
+		{
+			ft_putendl_fd("Error: Mutex lock failed", 2);
+			return (1);
+		}
 		if (philos[i].meals_eaten >= philos->n_eat)
 			count++;
-		pthread_mutex_unlock(philos->lock_meal);
+		if (pthread_mutex_unlock(philos->lock_meal))
+		{
+			ft_putendl_fd("Error: Mutex unlock failed", 2);
+			return (1);
+		}
 		i++;
 	}
 	if (count == philos->n_philos)
 	{
-		pthread_mutex_lock(philos->lock_dead);
+		if (pthread_mutex_lock(philos->lock_dead))
+		{
+			ft_putendl_fd("Error: Mutex lock failed", 2);
+			return (1);
+		}
 		*(philos->dead) = 1;
-		pthread_mutex_unlock(philos->lock_dead);
+		if (pthread_mutex_unlock(philos->lock_dead))
+		{
+			ft_putendl_fd("Error: Mutex unlock failed", 2);
+			return (1);
+		}
 		return (1);
 	}
 	return (0);
@@ -41,14 +57,31 @@ static int	check_finished_eating(t_philo *philos)
 
 static int	check_starved(t_philo *philo)
 {
-	pthread_mutex_lock(philo->lock_dead);
-	if (current_time() - philo->last_meal >= philo->t_die
-		&& philo->is_eating == 0)
+	time_t	time;
+
+	if (pthread_mutex_lock(philo->lock_dead))
 	{
-		pthread_mutex_unlock(philo->lock_dead);
+		ft_putendl_fd("Error: Mutex lock failed", 2);
 		return (1);
 	}
-	pthread_mutex_unlock(philo->lock_dead);
+	time = current_time();
+	if (time == -1)
+		return (1);
+	if (time - philo->last_meal >= philo->t_die
+		&& philo->is_eating == 0)
+	{
+		if (pthread_mutex_unlock(philo->lock_dead))
+		{
+			ft_putendl_fd("Error: Mutex unlock failed", 2);
+			return (1);
+		}
+		return (1);
+	}
+	if (pthread_mutex_unlock(philo->lock_dead))
+	{
+		ft_putendl_fd("Error: Mutex unlock failed", 2);
+		return (1);
+	}
 	return (0);
 }
 
@@ -61,10 +94,19 @@ static int	check_dead(t_philo *philos)
 	{
 		if (check_starved(&philos[i]))
 		{
-			print_log(&philos[i], "died", 1);
-			pthread_mutex_lock(philos->lock_dead);
+			if (print_log(&philos[i], "died", 1))
+				return (1);
+			if (pthread_mutex_lock(philos->lock_dead))
+			{
+				ft_putendl_fd("Error: Mutex lock failed", 2);
+				return (1);
+			}
 			*(philos->dead) = 1;
-			pthread_mutex_unlock(philos->lock_dead);
+			if (pthread_mutex_unlock(philos->lock_dead))
+			{
+				ft_putendl_fd("Error: Mutex unlock failed", 2);
+				return (1);
+			}
 			return (1);
 		}
 		i++;

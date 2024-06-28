@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:41:54 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/28 13:23:37 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/28 15:06:24 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,25 @@
 
 int	check_lock_dead(t_philo *philo)
 {
-	pthread_mutex_lock(philo->lock_dead);
-	if (*(philo->dead) == 1)
+	if (pthread_mutex_lock(philo->lock_dead))
 	{
-		pthread_mutex_unlock(philo->lock_dead);
+		ft_putendl_fd("Error: Mutex lock failed", 2);
 		return (1);
 	}
-	pthread_mutex_unlock(philo->lock_dead);
+	if (*(philo->dead) == 1)
+	{
+		if (pthread_mutex_unlock(philo->lock_dead))
+		{
+			ft_putendl_fd("Error: Mutex unlock failed", 2);
+			return (1);
+		}
+		return (1);
+	}
+	if (pthread_mutex_unlock(philo->lock_dead))
+	{
+		ft_putendl_fd("Error: Mutex unlock failed", 2);
+		return (1);
+	}
 	return (0);
 }
 
@@ -33,7 +45,7 @@ static void	*process(void *arg)
 	{
 		if (ft_usleep(1))
 		{
-			ft_putendl_fd("Error: usleep failed", 2);
+			ft_putendl_fd("Error: Usleep failed", 2);
 			return (NULL);
 		}
 	}
