@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:23:58 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/28 15:15:31 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/06/28 15:54:59 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int	print_log(t_philo *philo, char *str, int dead)
 	if (!check_lock_dead(philo))
 	{
 		if (dead == 0)
-			printf("%ld\t%d %s\n", time, philo->id, str);
+			printf("%ld\t%d\t%s\n", time, philo->id, str);
 		else
-			printf(ANSI_COLOR_RED"%ld\t%d %s\n"ANSI_COLOR_RESET,
+			printf(ANSI_COLOR_RED"%ld\t%d\t%s\n"ANSI_COLOR_RESET,
 				time, philo->id, str);
 	}
 	if (pthread_mutex_unlock(philo->lock_write))
