@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:13:40 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/28 15:07:32 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/07/01 13:57:46 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,7 @@ int		start_thinking(t_philo *philo);
 int		print_log(t_philo *philo, char *str, int dead);
 void	execute(t_manager *manager, pthread_mutex_t *forks);
 void	*control(void *arg);
+int		check_finished_eating(t_philo *philos);
+int		ft_error(char *str);
 
 #endif

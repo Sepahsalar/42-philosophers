@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:13:32 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/28 14:45:04 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/07/01 14:40:22 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,11 @@ static int	check_args(char **argv)
 
 	i = 1;
 	if (ft_atoi(argv[1]) > MAX_PHILO)
-	{
-		ft_putendl_fd("Error: Too many philosophers entered.", 2);
-		return (1);
-	}
+		return (ft_error("Error: Too many philosophers"));
 	while (argv[i])
 	{
 		if (!ft_isdigit(argv[i]) || ft_atoi(argv[i]) <= 0)
-		{
-			ft_putendl_fd("Error: Arguments should be positive numbers.", 2);
-			return (1);
-		}
+			return (ft_error("Error: Arguments should be positive numbers"));
 		i++;
 	}
 	return (0);
@@ -41,10 +35,7 @@ int	main(int argc, char **argv)
 	pthread_mutex_t	forks[MAX_PHILO];
 
 	if (argc != 5 && argc != 6)
-	{
-		ft_putendl_fd("Error: Invalid number of arguments", 2);
-		return (1);
-	}
+		return (ft_error("Error: Invalid number of arguments"));
 	if (check_args(argv))
 		return (1);
 	init_manager(&manager, philos);

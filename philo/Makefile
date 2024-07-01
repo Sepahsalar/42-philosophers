@@ -6,7 +6,7 @@
 #    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/24 16:14:08 by asohrabi          #+#    #+#              #
-#    Updated: 2024/06/28 13:52:18 by asohrabi         ###   ########.fr        #
+#    Updated: 2024/07/01 14:13:51 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = philo
 HEADER	= -I ./include
 
 FUNC =  src/main.c src/utils.c src/init.c src/execute.c src/terminate.c \
-		src/actions.c src/control.c \
+		src/actions.c  src/actions_utils.c src/control.c \
 
 OBJ = ${FUNC:.c=.o}
 

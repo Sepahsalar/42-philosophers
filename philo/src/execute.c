@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:41:54 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/28 15:06:24 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/07/01 14:05:07 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,15 @@
 int	check_lock_dead(t_philo *philo)
 {
 	if (pthread_mutex_lock(philo->lock_dead))
-	{
-		ft_putendl_fd("Error: Mutex lock failed", 2);
-		return (1);
-	}
+		return (ft_error("Error: Mutex lock failed"));
 	if (*(philo->dead) == 1)
 	{
 		if (pthread_mutex_unlock(philo->lock_dead))
-		{
-			ft_putendl_fd("Error: Mutex unlock failed", 2);
-			return (1);
-		}
+			return (ft_error("Error: Mutex unlock failed"));
 		return (1);
 	}
 	if (pthread_mutex_unlock(philo->lock_dead))
-	{
-		ft_putendl_fd("Error: Mutex unlock failed", 2);
-		return (1);
-	}
+		return (ft_error("Error: Mutex unlock failed"));
 	return (0);
 }
 
