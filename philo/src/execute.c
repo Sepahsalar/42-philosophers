@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:41:54 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/07/01 14:05:07 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/07/02 11:27:26 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,24 @@ int	check_lock_dead(t_philo *philo)
 
 static void	*process(void *arg)
 {
+	int		res;
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
+		res = usleep(3000);
+	else if (philo-> id != 1 && philo->id == philo->n_philos
+		&& philo->id % 2 != 0)
+		res = usleep(6000);
+	if (res == -1)
 	{
-		if (ft_usleep(1))
-		{
-			ft_putendl_fd("Error: Usleep failed", 2);
-			return (NULL);
-		}
+		ft_putendl_fd("Error: Usleep failed", 2);
+		return (NULL);
 	}
 	while (!check_lock_dead(philo))
 	{
-		if (start_eating(philo))
-			return (NULL);
-		if (start_sleeping(philo))
-			return (NULL);
-		if (start_thinking(philo))
+		if (start_eating(philo) || start_sleeping(philo)
+			|| start_thinking(philo))
 			return (NULL);
 	}
 	return (arg);

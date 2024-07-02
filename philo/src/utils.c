@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:17:18 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/06/28 15:20:18 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/07/02 11:24:04 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int	ft_usleep(time_t ms)
 
 	start = current_time();
 	if (start == -1)
+		return (1);
+	if (ms > 5 && usleep(1000 * (ms - 5)) == -1)
 		return (1);
 	while ((current_time() - start) < ms)
 		if (usleep(500) == -1)
